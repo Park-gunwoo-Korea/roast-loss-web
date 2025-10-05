@@ -32,7 +32,7 @@ function suggestChargeForTargetRemain(targetRemain: number, lossPct: number) {
   return targetRemain / r;
 }
 
-ttype ComputedItem = Omit<Row, "drop"> & {
+type ComputedItem = Omit<Row, "drop"> & {
   drop: number;
   loss: number;
   lossPct: number;

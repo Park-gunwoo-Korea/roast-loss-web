@@ -1,4 +1,3 @@
-import React from "react";
 type Props = { checked: boolean; onCheckedChange: (v: boolean) => void; id?: string };
 export function Switch({ checked, onCheckedChange, id }: Props) {
   return (
