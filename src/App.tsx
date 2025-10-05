@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
@@ -32,8 +32,12 @@ function suggestChargeForTargetRemain(targetRemain: number, lossPct: number) {
   return targetRemain / r;
 }
 
-type ComputedItem = Row & { drop: number; loss: number; lossPct: number; level: string };
-
+ttype ComputedItem = Omit<Row, "drop"> & {
+  drop: number;
+  loss: number;
+  lossPct: number;
+  level: string;
+};
 /* ----------------- CSV Export ----------------- */
 function rowsToCSV(rows: ComputedItem[], charge: number) {
   const header = [
@@ -105,12 +109,22 @@ export default function App() {
 
   const computed = useMemo(() => {
     const items: ComputedItem[] = rows.map((r) => {
-      const drop = toNumber(r.drop);
-      const loss = clamp2(chargeNum - drop);
-      const lossPct = chargeNum > 0 ? clamp2(((chargeNum - drop) / chargeNum) * 100) : 0;
-      const level = roastLevel(lossPct, levels);
-      return { ...r, drop, loss, lossPct, level };
-    });
+  const drop = toNumber(r.drop);
+  const loss = clamp2(chargeNum - drop);
+  const lossPct = chargeNum > 0 ? clamp2(((chargeNum - drop) / chargeNum) * 100) : 0;
+  const level = roastLevel(lossPct, levels);
+  const item: ComputedItem = {
+    id: r.id,
+    agtron: r.agtron,
+    devSec: r.devSec,
+    notes: r.notes,
+    drop,
+    loss,
+    lossPct,
+    level,
+  };
+  return item;
+});
     const totalDrop = clamp2(items.reduce((s, x) => s + (x.drop || 0), 0));
     const avgDrop = items.length ? clamp2(totalDrop / items.length) : 0;
     const avgLossPct = items.length ? clamp2(items.reduce((s, x) => s + (x.lossPct || 0), 0) / items.length) : 0;
