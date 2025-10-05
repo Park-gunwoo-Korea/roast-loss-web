@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 전역 팔레트 + 폰트 */
+:root {
+  --cream: #F4EFE8;   /* Warm Cream */
+  --roast: #4B2E2B;   /* Deep Roast Brown */
+  --mocha: #D5BDA4;   /* Mocha Mousse */
+  font-family: "Pretendard Variable", system-ui, "Segoe UI", "Noto Sans KR", Arial, sans-serif;
+}
+
+html, body, #root { height: 100%; }
+body { margin: 0; background-color: var(--cream); color: var(--roast); }
+
+/* ⚠️ 여기에는 로고 관련 커스텀 클래스(brand-logo 등) 넣지 마세요 */
